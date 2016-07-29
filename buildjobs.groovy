@@ -15,8 +15,11 @@ testShellTemplate = engine.createTemplate('make TEST_EXPRESSION="-k $testName"')
 recipePath.eachFile {
     def recipeName = it.name
     def jobName = "${baseJobName}${recipeName}"
-    println "make dump-description RECIPE_NAME=${recipeName}".execute().text
-    println "Test"
+    def sout = new StringBuilder(), serr = new StringBuilder()
+    def proc = "make dump-description RECIPE_NAME=${recipeName}".execute()
+    proc.consumeProcessOutput(sout, serr)
+    proc.waitForOrKill(1000)
+    println "out> $sout err> $serr"
     def defJsonString = new File(it, "def.json").text
     def jsonSlurper = new JsonSlurper()
     def recipeDef = jsonSlurper.parseText(defJsonString)
