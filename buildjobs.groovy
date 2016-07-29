@@ -1,4 +1,4 @@
-
+import groovy.json.JsonSlurper
 
 def githubOrg = 'jmchilton'
 def githubProject = 'jobs-dsl-test'
