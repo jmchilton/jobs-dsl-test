@@ -6,9 +6,10 @@ import functools
 import subprocess
 import uuid
 
-ROOT_DIRECTORY = "."
-DEFAULT_RECIPE_DIRECTORY = "recipes"
-RECIPE_DIRECTORY = os.environ.get("RECIPE_DIRECTORY", DEFAULT_RECIPE_DIRECTORY)
+JUST_DOCKERFILES_CONFIG = os.getenv("JUST_DOCKERFILES_CONFIG", "./just-dockerfiles.json")
+PROJECT_DIRECTORY = os.path.dirname(JUST_DOCKERFILES_CONFIG)
+DEFAULT_RECIPE_DIRECTORY = os.path.join(PROJECT_DIRECTORY, "recipes")
+RECIPE_DIRECTORY = os.environ.get("JUST_DOCKERFILES_RECIPES", DEFAULT_RECIPE_DIRECTORY)
 
 
 def _create_function_for_recipe(recipe_name):
