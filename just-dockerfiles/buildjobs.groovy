@@ -27,7 +27,7 @@ then
 fi
 cd ${testGithubProject};
 git pull;
-make run-test TARGET_ROOT=".." RECIPE_NAME="$testName"
+make run-test TARGET_ROOT=`pwd`/".." RECIPE_NAME="$testName" REPORT=`pwd`/../"report.xml"
 ''')
 
 recipePath.eachFile {
@@ -62,6 +62,9 @@ ${shellCommand}
         }
         steps {
             shell(shellCommand)
+        }
+        publishers {
+            archiveJunit 'report.xml'
         }
     }
 }

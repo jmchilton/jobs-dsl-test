@@ -3,5 +3,6 @@
     "testGithubProject": "jobs-dsl-test",
     "targetGithubOrg": "galaxyproject",
     "targetGithubProject": "galaxy",
+    "defaultTargetPath": "/galaxy",
     "baseJobName": "gx-community-qa-"
 }
