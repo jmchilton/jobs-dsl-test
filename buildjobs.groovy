@@ -16,7 +16,7 @@ recipePath.eachFile {
     def recipeName = it.name
     def jobName = "${baseJobName}${recipeName}"
     "make dump-description RECIPE_NAME=${recipeName}".execute()
-    def defJsonString = readFileFromWorkspace(new File(it, "def.json"))
+    def defJsonString = new File(it, "def.json").text
     def jsonSlurper = new JsonSlurper()
     def recipeDef = jsonSlurper.parseText(defJsonString)
     templateBinding = [
