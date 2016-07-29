@@ -6,8 +6,9 @@ def baseJobName = 'community-tests-'
 
 def engine = new groovy.text.SimpleTemplateEngine()
 
-script_path = new File(__FILE__)
-recipePath = new File(script_path.getParentFile(), 'recipes')
+scriptPath = new File(__FILE__)
+rootPath = scriptPath.getParentFile()
+recipePath = new File(rootPath, 'recipes')
 
 testShellTemplate = engine.createTemplate('make TEST_EXPRESSION="-k $testName"')
 
@@ -16,7 +17,7 @@ recipePath.eachFile {
     def recipeName = it.name
     def jobName = "${baseJobName}${recipeName}"
     def sout = new StringBuilder(), serr = new StringBuilder()
-    def proc = "make dump-description RECIPE_NAME=${recipeName}".execute()
+    def proc = "cd $ROOT_PATH; make dump-description RECIPE_NAME=${recipeName}".execute()
     proc.consumeProcessOutput(sout, serr)
     proc.waitForOrKill(1000)
     println "out> $sout err> $serr"
