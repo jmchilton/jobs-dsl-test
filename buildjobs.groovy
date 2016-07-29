@@ -1,3 +1,7 @@
+// require(url:'http://jyaml.sourceforge.net', jar:'jyaml.jar', version:'1.0')
+import org.ho.yaml.Yaml
+
+
 def githubOrg = 'jmchilton'
 def githubProject = 'jobs-dsl-test'
 def baseJobName = 'community-tests-'
@@ -5,18 +9,21 @@ def baseJobName = 'community-tests-'
 def engine = new groovy.text.SimpleTemplateEngine()
 
 script_path = new File(__FILE__)
-recipe_path = new File(script_path.getParentFile(), 'recipes')
+recipePath = new File(script_path.getParentFile(), 'recipes')
 
 testShellTemplate = engine.createTemplate('make TEST_EXPRESSION="-k $testName"')
 
 
-recipe_path.eachFile {
+recipePath.eachFile {
     def recipeName = it.name
     def jobName = "${baseJobName}${recipeName}"
+    def defYamlString = readFileFromWorkspace(new File(it, "def.yml"))
+    def recipeDef = Yaml.load(defYamlString)
     templateBinding = [
         "testName": recipeName
     ]
     job(jobName) {
+        description(recipeDef["description"])
         scm {
             git("git://github.com/${githubOrg}/${githubProject}.git")
         }
