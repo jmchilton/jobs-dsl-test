@@ -1,5 +1,3 @@
-@Grab(group='org.yaml', module='snakeyaml', version='1.13') 
-import org.yaml.snakeyaml.Yaml
 
 
 def githubOrg = 'jmchilton'
@@ -17,9 +15,10 @@ testShellTemplate = engine.createTemplate('make TEST_EXPRESSION="-k $testName"')
 recipePath.eachFile {
     def recipeName = it.name
     def jobName = "${baseJobName}${recipeName}"
-    def defYamlString = readFileFromWorkspace(new File(it, "def.yml"))
-    def yaml = new Yaml()
-    def recipeDef = yaml.load(defYamlString)
+    "make dump-description RECIPE_NAME=${recipeName}".execute()
+    def defJsonString = readFileFromWorkspace(new File(it, "def.json"))
+    def jsonSlurper = new JsonSlurper()
+    def recipeDef = jsonSlurper.parseText(defJsonString)
     templateBinding = [
         "testName": recipeName
     ]
