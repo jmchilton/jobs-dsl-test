@@ -19,7 +19,7 @@ recipePath.eachFile {
     def sout = new StringBuilder(), serr = new StringBuilder()
     def proc = "make dump-description RECIPE_NAME=${recipeName}".execute(null, rootPath)
     proc.consumeProcessOutput(sout, serr)
-    proc.waitForOrKill(1000)
+    proc.waitForOrKill(30000)
     println "out> $sout err> $serr"
     def defJsonString = new File(it, "def.json").text
     def jsonSlurper = new JsonSlurper()
