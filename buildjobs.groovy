@@ -15,7 +15,7 @@ testShellTemplate = engine.createTemplate('make TEST_EXPRESSION="-k $testName"')
 recipePath.eachFile {
     def recipeName = it.name
     def jobName = "${baseJobName}${recipeName}"
-    "make dump-description RECIPE_NAME=${recipeName}".execute()
+    println "make dump-description RECIPE_NAME=${recipeName}".execute().text
     def defJsonString = new File(it, "def.json").text
     def jsonSlurper = new JsonSlurper()
     def recipeDef = jsonSlurper.parseText(defJsonString)
