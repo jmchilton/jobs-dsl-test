@@ -17,7 +17,7 @@ recipePath.eachFile {
     def recipeName = it.name
     def jobName = "${baseJobName}${recipeName}"
     def sout = new StringBuilder(), serr = new StringBuilder()
-    def proc = "cd ${rootPath}; make dump-description RECIPE_NAME=${recipeName}".execute()
+    def proc = "make dump-description RECIPE_NAME=${recipeName}".execute(null, rootPath)
     proc.consumeProcessOutput(sout, serr)
     proc.waitForOrKill(1000)
     println "out> $sout err> $serr"
