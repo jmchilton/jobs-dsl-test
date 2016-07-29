@@ -27,13 +27,20 @@ recipePath.eachFile {
     templateBinding = [
         "testName": recipeName
     ]
+    def shellCommand = testShellTemplate.make(templateBinding).toString()
+    def jenkinsDescription = """<p>${recipeDef["description"]}</p>
+<p>This test can be executed locally as follows:</p>
+<code>
+${shellCommand}
+</code>
+    """
     job(jobName) {
-        description(recipeDef["description"])
+        description(jenkinsDescription)
         scm {
             git("git://github.com/${githubOrg}/${githubProject}.git")
         }
         steps {
-            shell(testShellTemplate.make(templateBinding).toString())
+            shell(shellCommand)
         }
     }
 }
