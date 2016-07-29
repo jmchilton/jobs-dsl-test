@@ -1,5 +1,5 @@
-// require(url:'http://jyaml.sourceforge.net', jar:'jyaml.jar', version:'1.0')
-import org.ho.yaml.Yaml
+@Grab(group='org.yaml', module='snakeyaml', version='1.13') 
+import org.yaml.snakeyaml.Yaml
 
 
 def githubOrg = 'jmchilton'
@@ -18,7 +18,8 @@ recipePath.eachFile {
     def recipeName = it.name
     def jobName = "${baseJobName}${recipeName}"
     def defYamlString = readFileFromWorkspace(new File(it, "def.yml"))
-    def recipeDef = Yaml.load(defYamlString)
+    def yaml = new Yaml()
+    def recipeDef = yaml.load(defYamlString)
     templateBinding = [
         "testName": recipeName
     ]
