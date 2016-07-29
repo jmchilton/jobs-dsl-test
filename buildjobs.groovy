@@ -16,6 +16,7 @@ recipePath.eachFile {
     def recipeName = it.name
     def jobName = "${baseJobName}${recipeName}"
     println "make dump-description RECIPE_NAME=${recipeName}".execute().text
+    println "Test"
     def defJsonString = new File(it, "def.json").text
     def jsonSlurper = new JsonSlurper()
     def recipeDef = jsonSlurper.parseText(defJsonString)
