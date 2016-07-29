@@ -5,7 +5,7 @@ def baseJobName = 'community-tests-'
 def engine = new groovy.text.SimpleTemplateEngine()
 
 script_path = new File(__FILE__)
-recipe_path = new File(script_path, 'recipes')
+recipe_path = new File(script_path.getParentFile(), 'recipes')
 
 testShellTemplate = engine.createTemplate('make TEST_EXPRESSION="-k $testName"')
 
