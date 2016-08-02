@@ -14,7 +14,7 @@ def just_dockerfiles_config_path = env.get("JUST_DOCKERFILES_CONFIG") ?: new Fil
 
 println "debug-2"
 def just_dockerfiles_config_file = new File(just_dockerfiles_config_path)
-def just_dockerfiles_config = just_dockerfiles_config_file.getText()
+def just_dockerfiles_config = jsonSlurper.parseText(just_dockerfiles_config_file.getText())
 
 println "debug-1"
 
