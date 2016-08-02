@@ -13,3 +13,6 @@ JUST_DOCKERFILES_MAKE=$(MAKE) -C "$(JUST_DOCKERFILES_DIR)"
 
 run-test:
 	$(JUST_DOCKERFILES_MAKE) run-test $(MAKEFLAGS)
+
+dump-description:
+	$(JUST_DOCKERFILES_MAKE) dump-description $(MAKEFLAGS)
