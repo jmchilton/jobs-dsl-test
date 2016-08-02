@@ -4,7 +4,7 @@ def env = System.getenv()
 
 def jsonSlurper = new JsonSlurper()
 println "debug-3"
-
+println env
 def just_dockerfiles_config_path = env.get("JUST_DOCKERFILES_CONFIG", "just-dockerfiles.json")
 println "debug-2"
 def just_dockerfiles_config_file = new File(just_dockerfiles_config_path)
