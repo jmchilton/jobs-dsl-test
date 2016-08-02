@@ -3,7 +3,7 @@ import groovy.json.JsonSlurper
 def env = System.getenv()
 
 def scriptPath = new File(__FILE__)
-def rootPath = scriptPath.getParentFile()
+def rootPath = scriptPath.getParentFile().getParentFile()
 
 def jsonSlurper = new JsonSlurper()
 
