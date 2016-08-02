@@ -7,6 +7,8 @@ def just_dockerfiles_config_path = env.get("JUST_DOCKERFILES_CONFIG", "just-dock
 def just_dockerfiles_config_file = new File(just_dockerfiles_config_path)
 def just_dockerfiles_config = just_dockerfiles_config_file.getText()
 
+println "debug-1"
+
 def testGithubOrg = just_dockerfiles_config.testGithubOrg
 def testGithubProject = just_dockerfiles_config.testGithubOrg.testGithubProject
 def targetGithubOrg = just_dockerfiles_config.targetGithubOrg
