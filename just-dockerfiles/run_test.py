@@ -2,7 +2,7 @@
 from __future__ import print_function
 
 import functools
-import json
+import yaml
 import os
 import subprocess
 import uuid
@@ -14,7 +14,7 @@ RECIPE_DIRECTORY = os.environ.get("JUST_DOCKERFILES_RECIPES", DEFAULT_RECIPE_DIR
 
 
 with open(JUST_DOCKERFILES_CONFIG_PATH, "r") as f:
-    JUST_DOCKERFILES_CONFIG = json.load(f)
+    JUST_DOCKERFILES_CONFIG = yaml.load(f)
 
 
 def _create_function_for_recipe(recipe_name):
@@ -29,7 +29,7 @@ def _t_function(path):
     recipe_config_path = os.path.join(path, "def.yml")
     if os.path.exists(recipe_config_path):
         with open(recipe_config_path, "r") as f:
-            recipe_config = json.load(f)
+            recipe_config = yaml.load(f)
     else:
         recipe_config = {}
 
