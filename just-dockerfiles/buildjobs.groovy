@@ -30,7 +30,7 @@ then
 fi
 cd ${testGithubProject};
 git pull;
-make run-test TARGET_ROOT=`pwd`/".." RECIPE_NAME="$testName" REPORT=`pwd`/../"report.xml"
+make run-test TARGET_ROOT=`pwd`/".." RECIPE_NAME="$testName" REPORT=`pwd`/../${BUILD_TAG}-report.xml"
 ''')
 
 recipePath.eachFile {
@@ -69,7 +69,7 @@ ${shellCommand}
             shell(shellCommand)
         }
         publishers {
-            archiveJunit 'report.xml'
+            archiveJunit '${BUILD_TAG}-report.xml'
         }
     }
 }
