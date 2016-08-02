@@ -16,6 +16,7 @@ def baseJobName = just_dockerfiles_config.baseJobName
 
 def engine = new groovy.text.SimpleTemplateEngine()
 
+println "debug0"
 scriptPath = new File(__FILE__)
 println "debug1"
 
