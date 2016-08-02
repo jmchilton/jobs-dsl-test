@@ -14,4 +14,4 @@ dump-description: setup-venv # Dump JSON description of recipe
 	$(IN_VENV) python dump_description.py $(RECIPE_NAME)
 
 run-test: setup-venv # Run a test.
-	$(IN_VENV) py.test run_test.py -k $(RECIPE_NAME)
+	$(IN_VENV) py.test run_test.py -k $(RECIPE_NAME) --junit-xml $(REPORT)
