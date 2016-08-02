@@ -18,7 +18,7 @@ def just_dockerfiles_config = jsonSlurper.parseText(just_dockerfiles_config_file
 
 println "debug-1"
 
-def testGithubOrg = just_dockerfiles_config.testGithubOrg
+def testGithubOrg = just_dockerfiles_config["testGithubOrg"]
 def testGithubProject = just_dockerfiles_config.testGithubOrg.testGithubProject
 def targetGithubOrg = just_dockerfiles_config.targetGithubOrg
 def targetGithubProject = just_dockerfiles_config.targetGithubProject
