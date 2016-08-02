@@ -2,10 +2,16 @@ import groovy.json.JsonSlurper
 
 def env = System.getenv()
 
+def scriptPath = new File(__FILE__)
+def rootPath = scriptPath.getParentFile()
+
 def jsonSlurper = new JsonSlurper()
+
+
 println "debug-3"
 println env
-def just_dockerfiles_config_path = env.get("JUST_DOCKERFILES_CONFIG") ?: "just-dockerfiles.json"
+def just_dockerfiles_config_path = env.get("JUST_DOCKERFILES_CONFIG") ?: new File(rootPath, "just-dockerfiles.json")
+
 println "debug-2"
 def just_dockerfiles_config_file = new File(just_dockerfiles_config_path)
 def just_dockerfiles_config = just_dockerfiles_config_file.getText()
@@ -23,11 +29,6 @@ def baseJobName = just_dockerfiles_config.baseJobName
 def engine = new groovy.text.SimpleTemplateEngine()
 
 println "debug0"
-scriptPath = new File(__FILE__)
-println "debug1"
-
-rootPath = scriptPath.getParentFile()
-println "debug2"
 
 recipePath = new File(rootPath, 'recipes')
 println "debug3"
@@ -70,19 +71,15 @@ ${shellCommand}
         scm {
             git("git://github.com/${targetGithubOrg}/${targetGithubProject}.git")
         }
-        /*
         triggers {
             cron("@daily")
         }
-        */
         steps {
             shell(shellCommand)
         }
-        /*
         publishers {
             archiveJunit 'report.xml'
         }
-        */
     }
 }
 
