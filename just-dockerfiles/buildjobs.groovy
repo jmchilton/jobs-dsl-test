@@ -68,9 +68,10 @@ ${shellCommand}
     """
     job(jobName) {
         description(jenkinsDescription)
-        scm {
-            git("git://github.com/${targetGithubOrg}/${targetGithubProject}.git")
-        }
+        githubProjectUrl("https://github.com/${targetGithubOrg}/${targetGithubProject}")
+        //scm {
+        //    git("git://github.com/${targetGithubOrg}/${targetGithubProject}.git")
+        //}
         triggers {
             cron("@daily")
         }
