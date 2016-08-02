@@ -7,16 +7,9 @@ def rootPath = scriptPath.getParentFile().getParentFile()
 
 def jsonSlurper = new JsonSlurper()
 
-
-println "debug-3"
-println env
 def just_dockerfiles_config_path = env.get("JUST_DOCKERFILES_CONFIG") ?: new File(rootPath, "just-dockerfiles.json").getAbsolutePath()
-
-println "debug-2"
 def just_dockerfiles_config_file = new File(just_dockerfiles_config_path)
 def just_dockerfiles_config = jsonSlurper.parseText(just_dockerfiles_config_file.getText())
-
-println "debug-1"
 
 def testGithubOrg = just_dockerfiles_config.testGithubOrg
 def testGithubProject = just_dockerfiles_config.testGithubProject
@@ -28,10 +21,7 @@ def baseJobName = just_dockerfiles_config.baseJobName
 
 def engine = new groovy.text.SimpleTemplateEngine()
 
-println "debug0"
-
 recipePath = new File(rootPath, 'recipes')
-println "debug3"
 
 testShellTemplate = engine.createTemplate('''
 if [ ! -d ${testGithubProject} ];
@@ -71,8 +61,6 @@ ${shellCommand}
         
         scm {
             github "${targetGithubOrg}/${targetGithubProject}"
-            //githubProjectUrl("https://github.com/${targetGithubOrg}/${targetGithubProject}")
-            //    git("git://github.com/${targetGithubOrg}/${targetGithubProject}.git")
         }
         triggers {
             cron("@daily")
@@ -85,5 +73,3 @@ ${shellCommand}
         }
     }
 }
-
-    

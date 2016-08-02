@@ -8,10 +8,9 @@ import subprocess
 import uuid
 
 JUST_DOCKERFILES_CONFIG_PATH = os.getenv("JUST_DOCKERFILES_CONFIG", "./just-dockerfiles.json")
-PROJECT_DIRECTORY = os.path.dirname(JUST_DOCKERFILES_CONFIG_PATH)
+PROJECT_DIRECTORY = os.path.abspath(os.path.dirname(JUST_DOCKERFILES_CONFIG_PATH))
 DEFAULT_RECIPE_DIRECTORY = os.path.join(PROJECT_DIRECTORY, "recipes")
 RECIPE_DIRECTORY = os.environ.get("JUST_DOCKERFILES_RECIPES", DEFAULT_RECIPE_DIRECTORY)
-TARGET_PATH = os.path.abspath(os.environ["TARGET_PATH"])
 
 
 with open(JUST_DOCKERFILES_CONFIG_PATH, "r") as f:
@@ -34,9 +33,12 @@ def _t_function(path):
     else:
         recipe_config = {}
 
+    target_path = _get_defaultable_option(recipe_config, "targetPath", "/app")
+    target_root = os.getenv("TARGET_ROOT", os.path.join(PROJECT_DIRECTORY, ".."))
+
     docker_image_id = str(uuid.uuid4())
     _check_call(["docker", "build", "-t", docker_image_id, "."], cwd=path)
-    _check_call(["docker", "run", "-t", docker_image_id], cwd=path)
+    _check_call(["docker", "run", "-t", docker_image_id, "-v", "%s:%s" % (target_root, target_path)], cwd=path)
 
 
 def _check_call(cmd, cwd):
@@ -46,10 +48,11 @@ def _check_call(cmd, cwd):
 
 
 def _get_defaultable_option(recipe_config, key, default):
+    default_key = key[0].upper() + key[1:]
     if key in recipe_config:
         return recipe_config.get(key)
-    elif key in JUST_DOCKERFILES_CONFIG:
-        return JUST_DOCKERFILES_CONFIG.get(key)
+    elif default_key in JUST_DOCKERFILES_CONFIG:
+        return JUST_DOCKERFILES_CONFIG.get(default_key)
     else:
         return default
 
