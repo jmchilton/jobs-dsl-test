@@ -70,7 +70,8 @@ ${shellCommand}
         description(jenkinsDescription)
         
         scm {
-            githubProjectUrl("https://github.com/${targetGithubOrg}/${targetGithubProject}")
+            github "${targetGithubOrg}/${targetGithubProject}"
+            //githubProjectUrl("https://github.com/${targetGithubOrg}/${targetGithubProject}")
             //    git("git://github.com/${targetGithubOrg}/${targetGithubProject}.git")
         }
         triggers {
