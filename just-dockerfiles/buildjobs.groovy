@@ -1,7 +1,5 @@
 import groovy.json.JsonSlurper
 
-println "debug"
-
 def env = System.getenv()
 
 def jsonSlurper = new JsonSlurper()
@@ -21,6 +19,8 @@ def engine = new groovy.text.SimpleTemplateEngine()
 scriptPath = new File(__FILE__)
 rootPath = scriptPath.getParentFile()
 recipePath = new File(rootPath, 'recipes')
+
+println "debug"
 
 testShellTemplate = engine.createTemplate('''
 if [ ! -d ${testGithubProject} ];
