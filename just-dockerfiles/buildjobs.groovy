@@ -33,6 +33,7 @@ make run-test TARGET_ROOT=`pwd`/".." RECIPE_NAME="$testName" REPORT=`pwd`/../"re
 recipePath.eachFile {
     def recipeName = it.name
     def jobName = "${baseJobName}${recipeName}"
+    println "tets here"
     def sout = new StringBuilder(), serr = new StringBuilder()
     def proc = "make dump-description RECIPE_NAME=${recipeName}".execute(null, rootPath)
     proc.consumeProcessOutput(sout, serr)
@@ -63,9 +64,11 @@ ${shellCommand}
         steps {
             shell(shellCommand)
         }
+        /*
         publishers {
             archiveJunit 'report.xml'
         }
+        */
     }
 }
 
