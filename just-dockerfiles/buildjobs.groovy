@@ -59,7 +59,7 @@ recipePath.eachFile {
         "testGithubProject": testGithubProject,
         "testName": recipeName
     ]
-    def shellCommand = "" // testShellTemplate.make(templateBinding).toString()
+    def shellCommand = testShellTemplate.make(templateBinding).toString()
     def jenkinsDescription = """<p>${recipeDef["description"]}</p>
 <p>This test can be executed locally as follows:</p>
 <code>
