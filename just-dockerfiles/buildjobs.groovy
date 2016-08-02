@@ -1,5 +1,7 @@
 import groovy.json.JsonSlurper
 
+println "debug"
+
 def env = System.getenv()
 
 def jsonSlurper = new JsonSlurper()
