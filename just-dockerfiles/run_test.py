@@ -38,9 +38,9 @@ def _t_function(path):
 
     docker_image_id = str(uuid.uuid4())
     recipe_type = _recipe_type(path, recipe_config)
-    if recipe_type == "docker":
+    if recipe_type == "dockerfile":
         _check_call(["docker", "build", "-t", docker_image_id, "."], cwd=path)
-        _check_call(["docker", "run", "--rm", "-t", docker_image_id, "-v", "%s:%s" % (target_root, target_path)], cwd=path)
+        _check_call(["docker", "run", "-v", "%s:%s" % (target_root, target_path), "--rm", "-t", docker_image_id], cwd=path)
     else:
         compose_args = []
         common_docker_compose_path = os.path.join(path, "common-docker-compose.yml")
@@ -66,7 +66,7 @@ def _t_function(path):
             finally:
                 _check_call_flattened(["docker-compose", compose_args, "kill"], **compose_kwd)
         finally:
-            _check_call_flattened(["docker-compose", compose_args, "rm"], **compose_kwd)
+            _check_call_flattened(["docker-compose", compose_args, "rm", "-f"], **compose_kwd)
 
 
 def _recipe_type(path, recipe_config):
@@ -85,6 +85,8 @@ def _recipe_type(path, recipe_config):
 
     if recipe_type not in ["docker-compose", "dockerfile", "docker-image"]:
         raise Exception("Unknown recipe type [%s]" % recipe_type)
+
+    return recipe_type
 
 
 def _check_call_flattened(cmd, *args, **kwd):
