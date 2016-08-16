@@ -2,7 +2,7 @@ FROM toolshed/requirements
 MAINTAINER John Chilton, jmchilton@gmail.com
 
 RUN apt-get -qq update && \
-    apt-get install --no-install-recommends -y python-pip && \
+    apt-get install --no-install-recommends -y python-pip samtools && \
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV PLANEMO_VIRTUALENV=/planemo_venv \
@@ -25,4 +25,4 @@ RUN mkdir -p $REPOSITORY/.. && \
     git clone $GITHUB_REPO $REPOSITORY
 
 CMD  . "$PLANEMO_VIRTUALENV/bin/activate" && \
-     planemo test --conda_dependency_resolution --conda_auto_install --galaxy_root "$GALAXY_ROOT" "$REPOSITORY"/tools/bedtools/tagBed.xml
+     planemo test --conda_dependency_resolution --conda_auto_init --conda_auto_install --galaxy_root "$GALAXY_ROOT" "$REPOSITORY"/tools/bedtools/tagBed.xml
