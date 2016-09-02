@@ -51,11 +51,16 @@ recipePath.eachFile {
         "testName": recipeName
     ]
     def shellCommand = testShellTemplate.make(templateBinding).toString()
+    fields = justDockerfilesConfig.customFields ?: []
+    fields.map {
+        "<p>type: ${it.type}</p><p>label: ${it.label}</p><p>${it.name}</p>"
+    }
+
     def jenkinsDescription = """<p>${recipeDef["description"]}</p>
-<p>This test can be executed locally as follows:</p>
-<code>
+<p>This test can be executed locally with the following command:</p>
+<pre>
 ${shellCommand}
-</code>
+</pre>
     """
     job(jobName) {
         description(jenkinsDescription)
