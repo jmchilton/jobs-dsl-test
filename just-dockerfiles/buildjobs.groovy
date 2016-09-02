@@ -52,9 +52,9 @@ recipePath.eachFile {
     ]
     def shellCommand = testShellTemplate.make(templateBinding).toString()
     def fields = justDockerfilesConfig.customFields ?: []
-    def fieldsHtml = "".join(fields.collect {
+    def fieldsHtml = fields.collect {
         "<p>type: ${it.type}</p><p>label: ${it.label}</p><p>${it.name}</p>"
-    })
+    }.join("")
 
     def jenkinsDescription = """<p>${recipeDef["description"]}</p>
 $fieldsHtml
