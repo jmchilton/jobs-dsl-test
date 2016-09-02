@@ -52,7 +52,7 @@ recipePath.eachFile {
     ]
     def shellCommand = testShellTemplate.make(templateBinding).toString()
     fields = justDockerfilesConfig.customFields ?: []
-    fields.map {
+    fields.collect {
         "<p>type: ${it.type}</p><p>label: ${it.label}</p><p>${it.name}</p>"
     }
 
