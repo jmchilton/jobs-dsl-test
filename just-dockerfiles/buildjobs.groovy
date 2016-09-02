@@ -73,3 +73,24 @@ ${shellCommand}
         }
     }
 }
+
+listView("${baseJobName}") {
+    description('All ${baseJobName} jobs')
+    filterBuildQueue()
+    filterExecutors()
+    jobs {
+        name("${baseJobName}")
+        regex(/${baseJobName}.+/)
+    }
+    jobFilters {
+    }
+    columns {
+        status()
+        weather()
+        name()
+        lastSuccess()
+        lastFailure()
+        lastDuration()
+        buildButton()
+    }
+}
