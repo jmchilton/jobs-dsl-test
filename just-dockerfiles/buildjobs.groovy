@@ -7,16 +7,17 @@ def rootPath = scriptPath.getParentFile().getParentFile()
 
 def jsonSlurper = new JsonSlurper()
 
-def just_dockerfiles_config_path = env.get("JUST_DOCKERFILES_CONFIG") ?: new File(rootPath, "just-dockerfiles.json").getAbsolutePath()
-def just_dockerfiles_config_file = new File(just_dockerfiles_config_path)
-def just_dockerfiles_config = jsonSlurper.parseText(just_dockerfiles_config_file.getText())
+def justDockerfilesConfigPath = env.get("JUST_DOCKERFILES_CONFIG") ?: new File(rootPath, "just-dockerfiles.json").getAbsolutePath()
+def justDockerfilesConfigFile = new File(justDockerfilesConfigPath)
+def justDockerfilesConfig = jsonSlurper.parseText(justDockerfilesConfigFile.getText())
 
-def testGithubOrg = just_dockerfiles_config.testGithubOrg
-def testGithubProject = just_dockerfiles_config.testGithubProject
-def targetGithubOrg = just_dockerfiles_config.targetGithubOrg
-def targetGithubProject = just_dockerfiles_config.targetGithubProject
+def testGithubOrg = justDockerfilesConfig.testGithubOrg
+def testGithubProject = justDockerfilesConfig.testGithubProject
+def targetGithubOrg = justDockerfilesConfig.targetGithubOrg
+def targetGithubProject = justDockerfilesConfig.targetGithubProject
 
-def baseJobName = just_dockerfiles_config.baseJobName
+def jobViewName = justDockerfilesConfig.jobViewName
+def baseJobName = justDockerfilesConfig.baseJobName
 
 
 def engine = new groovy.text.SimpleTemplateEngine()
@@ -74,8 +75,8 @@ ${shellCommand}
     }
 }
 
-listView("${baseJobName}") {
-    description('All ${baseJobName} jobs')
+listView("${jobViewName}") {
+    description("All ${jobViewName} jobs")
     filterBuildQueue()
     filterExecutors()
     jobs {
@@ -86,10 +87,7 @@ listView("${baseJobName}") {
     }
     columns {
         status()
-        weather()
         name()
-        lastSuccess()
-        lastFailure()
         lastDuration()
         buildButton()
     }
