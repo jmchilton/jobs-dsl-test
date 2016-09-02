@@ -51,12 +51,13 @@ recipePath.eachFile {
         "testName": recipeName
     ]
     def shellCommand = testShellTemplate.make(templateBinding).toString()
-    fields = justDockerfilesConfig.customFields ?: []
-    fields.collect {
+    def fields = justDockerfilesConfig.customFields ?: []
+    def fieldsHtml = "".join(fields.collect {
         "<p>type: ${it.type}</p><p>label: ${it.label}</p><p>${it.name}</p>"
-    }
+    })
 
     def jenkinsDescription = """<p>${recipeDef["description"]}</p>
+$fieldsHtml
 <p>This test can be executed locally with the following command:</p>
 <pre>
 ${shellCommand}
